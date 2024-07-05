@@ -5,7 +5,8 @@
   
   <script setup>
   import {ref, watch} from "vue"
-  import {store} from "./PlayStore.js"
+  import {state} from "./StoreState.js"
+  import {geo} from "./StoreGeo.js"
   
   let props = defineProps({
     distUser: Number,
@@ -18,9 +19,10 @@
   
   // If userdistance is not changed, watch capital change to update text
   watch(
-  () => store.capEntry, // First callback is triggered by vue to collect dependencies
+  () => geo.capEntry, // First callback is triggered by vue to collect dependencies
   () => { // Second callback is triggered on dependency change
-    entryText.value = store.capEntry + " liegt in " + store.couEntry +"."
+    
+    entryText.value = geo.capEntry + " liegt in " + geo.couEntry +"."
     distText.value = "Versuche bei der nächsten Frage die Haupstadt auf der Karte zu markieren."
     rateText.value = ""
   })
@@ -30,15 +32,14 @@
   () => props.distUser, // First callback is triggered by vue to collect dependencies
   () => { // Second callback is triggered on dependency change
     if (props.distUser == null){
-      entryText.value = store.capEntry + " liegt in " + store.couEntry +"."
+      entryText.value = geo.capEntry + " liegt in " + geo.couEntry +"."
       distText.value = "Versuche bei der nächsten Frage die Haupstadt auf der Karte zu markieren."
       rateText.value = ""
     }
     else{
       distR = Math.round(props.distUser)
-    
-      entryText.value = store.capEntry + " ist die Hauptstadt von " + store.couEntry +"."
-      distText.value = "Deine Distanz zu" + store.capEntry + " ist " + distR + " km."
+      entryText.value = geo.capEntry + " ist die Hauptstadt von " + geo.couEntry +"."
+      distText.value = "Deine Distanz zu" + geo.capEntry + " ist " + distR + " km."
     
       if(distR < 50){rateText.value = "Fantastisch, du hast herausragende geografische Kenntnisse!"}
       else if(distR  < 150){rateText.value = "Beeindruckend, du hast exzellente geografische Kenntnisse!"}

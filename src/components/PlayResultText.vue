@@ -1,18 +1,20 @@
 <template>
-    <p id = "playInit"> Quiz um die Welt<br>
-      Errate die Position von Hauptstädten auf der Weltkarte.<br>
-      Markiere die Haupstadt auf der Karte möglichst genau.
+    <p id = "playStats"> Geschafft!<br>
+      Du hast {{Math.round(prop.percentUser)}}% erreicht.<br>
+      Starte gleich ein neues Quiz!
       </p>
   </template>
   
   <script setup>
   import {ref, watch} from "vue"
-  import {store} from "./PlayStore.js"
- 
+  import {state} from "./StoreState.js"
+
+  const prop = defineProps({percentUser:Number})
+
   </script>
 
   <style>
-    #playInit{
+    #playStats{
       height: 100%;
       width: 100%;
       background-color: #d4cdcd8c;

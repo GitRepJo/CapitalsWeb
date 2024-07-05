@@ -9,11 +9,12 @@
   import Draw  from 'ol/interaction/Draw'
   import 'ol/ol.css'
   import Projection from 'ol/proj/Projection.js';
-  import {Circle, Point} from 'ol/geom.js';
-  import { useCircleLayer } from './PlayMapCircleLayer';
-  import { useMapLayer } from './PlayMapMapLayer';
-  import { useDrawLayer } from './PlayMapDrawLayer';
-  import {store} from "./PlayStore.js"
+  import {Circle} from 'ol/geom.js';
+  import {useCircleLayer} from './PlayMapCircleLayer';
+  import {useMapLayer} from './PlayMapMapLayer';
+  import {useDrawLayer} from './PlayMapDrawLayer';
+  import {state} from "./StoreState.js"
+  import {geo} from "./StoreGeo.js"
 
   const mapComp = ref(null);
   
@@ -45,10 +46,10 @@
 
   // Map actions in question state
   watch(
-  () => store.questionState, // First callback is triggered by vue to collect dependencies
+  () => state.questionState, // First callback is triggered by vue to collect dependencies
   () => { // Second callback is triggered on dependency change
     if (mapInstance != null){
-      if (store.questionState){ 
+      if (state.questionState){ 
         mapInstance.addInteraction(draw);   // Drawing only possible during question state
         
         if (drawLayer.getSource().getFeatures() != null){
@@ -62,12 +63,12 @@
 
   // Map actions during answer state
   watch(
-  () => store, // First callback is triggered by vue to collect dependencies
+  () => state, // First callback is triggered by vue to collect dependencies
   () => { // Second callback is triggered on dependency change
     if (mapInstance != null){
-      if (store.answerState || store.endState){
+      if (state.answerState || state.endState){
         // Draw circle at current capital location
-        let custCircle = new Circle([store.lonEntry,store.latEntry], 20)
+        let custCircle = new Circle([geo.lonEntry,geo.latEntry], 20)
         circleLayer1.getSource().getFeatureById("circ").setGeometry(custCircle)
         mapInstance.addLayer(circleLayer1)
       }

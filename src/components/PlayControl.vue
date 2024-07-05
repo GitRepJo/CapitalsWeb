@@ -10,47 +10,49 @@
 <script setup>
 
   import {ref, watch} from "vue"
-  import {store} from "./PlayStore.js"
+  import {state} from "./StoreState.js"
+  import {geo} from "./StoreGeo.js"
   import {useRandCap} from "./PlayControlRandCap.js"
 
   let questionCounter = 0
   let timerOn = ref(false) // Timer on/off for time to answer question is shown
   let buttonText = ref("Starte das Quiz!")
   
-  store.questionNumber = 3
-  store.setStartState()
+  state.questionNumber = 3
+  state.setStartState()
 
   let timeOut = null
 
   function onClick(){  
-    // Start state
-    if (store.endState){
-      store.setStartState()
+    // Result state
+    if (state.endState){
+      state.setResultState()
       buttonText.value = "Starte ein neues Quiz!"
     }
     // Answer state
-    else if (store.questionState && questionCounter != store.questionNumber ){
-      store.setAnswerState()
+    else if (state.questionState && questionCounter != state.questionNumber ){
+      state.setAnswerState()
       buttonText.value = "Nächste Frage"
       timerOn.value = false
       clearTimeout(timeOut)
     }
     // Question state
-    else if ((store.startState || store.answerState) && questionCounter < store.questionNumber){
+    else if ((state.startState || state.answerState  || state.resultState) 
+      && questionCounter < state.questionNumber){
       let entry = useRandCap()
-      store.setEntry(entry.cou, entry.cap, entry.lon, entry.lat)
-      store.setQuestionState()
+      geo.setEntry(entry.cou, entry.cap, entry.lon, entry.lat)
+      state.setQuestionState()
       questionCounter ++
       buttonText.value = 
           questionCounter + "/"+ 
-        store.questionNumber + " Wo liegt die Hauptstadt " + 
-        store.capEntry + "?"
+        state.questionNumber + " Wo liegt die Hauptstadt " + 
+        geo.capEntry + "?"
       timerOn.value = true
-      timeOut = setTimeout(callback, 20000)
+      timeOut = setTimeout(onTimer, 20000)
     }
     // End state
-    else if (questionCounter >= store.questionNumber){
-      store.setEndState()
+    else if (questionCounter >= state.questionNumber){
+      state.setEndState()
       buttonText.value = "Alle Quizfragen beantwortet!"
       questionCounter = 0
       timerOn.value = false
@@ -58,15 +60,15 @@
     }
   }
 
-  function callback(){
-    if (store.questionState && questionCounter != store.questionNumber ){
-      store.setAnswerState()
+  function onTimer(){
+    if (state.questionState && questionCounter != state.questionNumber ){
+      state.setAnswerState()
       buttonText.value = "Nächste Frage"
       timerOn.value = false
       clearTimeout(timeOut)
     }
     else{
-      store.setEndState()
+      state.setEndState()
       buttonText.value = "Alle Quizfragen beantwortet!"
       questionCounter = 0
       timerOn.value = false

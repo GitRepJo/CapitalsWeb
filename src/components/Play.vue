@@ -9,74 +9,53 @@
       <ControlButton />
     </div>
 
-    <div id="appPlayResult" v-show="resultOn">
-      <ResultText @click="()=>resultOn = false" :distUser="playDistUser" />
+    <div id="appPlayResult" v-show="state.answerText">
+      <AnswerText @click="()=>state.answerText = false" :distUser="playDistUser" />
     </div>
 
-    <div id="appPlayInit" v-show="initOn">
-      <InitText @click="()=>initOn = false" />
+    <div id="appPlayInit" v-show="state.startText">
+      <StartText @click="()=>state.startText = false" />
     </div>
 
-    <div id="appPlayStats" v-show="statsOn">
-      <StatsText @click="()=>statsOn = false" :percentUser="playPercentUser"/>
+    <div id="appPlayStats" v-show="state.resultText">
+      <ResultText @click="()=>state.resultText = false" :percentUser="playPercentUser"/>
     </div>
 
   </div>
 </template>
 
 <script setup>
-  import ResultText from './PlayResult.vue';
+  import AnswerText from './PlayAnswerText.vue';
   import Map from './PlayMap.vue';
   import ControlButton from './PlayControl.vue';
-  import InitText from './PlayInit.vue';
-  import StatsText from './PlayStats.vue';
+  import StartText from './PlayStartText.vue';
+  import ResultText from './PlayResultText.vue';
   import { ref, watch } from 'vue'
   import {useLatLonDiff} from "./PlayLatLonDiff.js"
-  import {store} from "./PlayStore.js"
+  import {state} from "./StoreState.js"
+  import {geo} from "./StoreGeo.js"
   import {useToPercentage} from "./PlayToPercentage.js"
 
-  let initOn = ref(true)
-  let statsOn = ref(false)
-  let resultOn = ref(false)
   let playDistUser = ref(0)
-  let initCondition = true
   let playPercentUser = ref(0)
   let percentUserSum = 0
 
-  // Manage text in according to state
+  // Manage uservalues according to state
   watch(
-  () => store, 
+  () => state, 
   () => { 
-    if (store.answerState){
+    if (state.answerState){
       percentUserSum += useToPercentage(playDistUser.value)
-      console.log("play points user", percentUserSum)
     }
-    if (store.endState){
+    if (state.endState){
       percentUserSum += useToPercentage(playDistUser.value)
-      playPercentUser.value = percentUserSum / store.questionNumber
-      
-      console.log("play points user", percentUserSum)
-      console.log("play points user total", playPercentUser.value )
+      playPercentUser.value = percentUserSum / state.questionNumber
       percentUserSum = 0
     }
-
-    if (store.answerState || store.endState){ 
-      resultOn.value = true
-       
-    }
-    else {resultOn.value = false}
-   
-    if(store.answerState) {initCondition = false}
-
-    if (store.questionState) {initOn.value = false}
-
-    if  (store.startState && !initCondition) {statsOn.value = true}
-    else {statsOn.value = false}
-
   },{deep:true})
 
   function getUser(lonUser, latUser) {
-    playDistUser.value = useLatLonDiff(latUser, lonUser, store.latEntry,store.lonEntry )
+    playDistUser.value = useLatLonDiff(latUser, lonUser, geo.latEntry, geo.lonEntry )
   }
   
 </script>

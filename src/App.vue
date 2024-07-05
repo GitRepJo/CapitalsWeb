@@ -30,10 +30,15 @@
   }
 
   #vueMenu{
+    font: italic 1.2rem "Fira Sans", serif;
+    color: rgb(0, 0, 0);
     position: absolute;
     top: 1%;
     height: 8%;
     width: 100%; 
+    background-color: #e9e5e5; 
+    border-radius: 7px; 
+    font-size: 150%;
   }
  
   hr{
