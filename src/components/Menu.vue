@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-import MenuNew from './MenuNew.vue';
-import MenuOptions from './MenuOptions.vue';
+import MenuNew from './MenuSideTop.vue';
+import MenuOptions from './MenuSideLeft.vue';
 
 </script>
 

@@ -1,9 +1,19 @@
 
 <template>
-  <div id="MenuOptions"><img id="MenuOptionsImage" class="opacity" src="./icons/three_lines.png"></div> 
+ 
+    <img @click="setSideMenu" id="MenuOptionsImage" 
+      class="opacity" src="./icons/three_lines.png">
+  
 </template>
 
 <script setup>
+import {state} from "./StoreState.js"
+
+function setSideMenu(){
+  if (state.sideLeft == true){
+    state.unsetSide()}
+  else {state.setSideLeft()}
+}
 
 </script>
 
@@ -24,7 +34,8 @@
     display: flex;
     justify-content: center;
     align-items: center;  
-  
+    transition: 0.3s;
+    opacity: 0.3;
   }
-  .opacity { filter: opacity(50%); }
-</style>
+  #MenuOptionsImage:hover, #MenuOptionsImage:active {opacity: 0.6}
+  </style>

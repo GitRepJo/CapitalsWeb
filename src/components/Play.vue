@@ -1,26 +1,26 @@
 <template>
   <div id="appPlay">
     
-    <div id ="appPlayMap">
-      <Map @posUser = "getUser"/>
-    </div>
-    
-    <div id ="appPlayControl">
-      <ControlButton />
-    </div>
-
-    <div id="appPlayResult" v-show="state.answerText">
-      <AnswerText @click="()=>state.answerText = false" :distUser="playDistUser" />
-    </div>
-
-    <div id="appPlayInit" v-show="state.startText">
-      <StartText @click="()=>state.startText = false" />
-    </div>
-
-    <div id="appPlayStats" v-show="state.resultText">
-      <ResultText @click="()=>state.resultText = false" :percentUser="playPercentUser"/>
-    </div>
-
+      <div id ="appPlayMap">
+        <Map @posUser = "getUser"/>
+      </div>
+      
+      <div id ="appPlayControl">
+        <ControlButton />
+      </div>
+  
+      <div id="appPlayResult" v-show="state.answerText">
+        <AnswerText @click="()=>state.answerText = false" :distUser="playDistUser" />
+      </div>
+  
+      <div id="appPlayInit" v-show="state.startText">
+        <StartText @click="()=>state.startText = false" />
+      </div>
+  
+      <div id="appPlayStats" v-show="state.resultText">
+        <ResultText :percentUser="playPercentUser"/>
+      </div>
+  
   </div>
 </template>
 
@@ -71,7 +71,7 @@
 #appPlayStats{
   top: 30%;
   left: 20%;
-  height: 30%;
+  height: 40%;
   width: 60%;
   position: absolute;
 }
@@ -107,5 +107,7 @@
   height: 7%;
   position: absolute;
 }
+
+
 
 </style>

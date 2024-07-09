@@ -5,6 +5,27 @@ export const state = reactive({
 
   questionNumber : 0,
 
+  side: false,
+  sideLeft: false,
+  sideTop: false,
+
+  setSideLeft(){
+    this.side = true
+    this.sideLeft = true
+    this.sideTop  = false
+  },
+
+  setSideTop(){
+    this.side = true
+    this.sideLeft = false
+    this.sideTop  = true
+  },
+  unsetSide(){
+    this.side = false
+    this.sideLeft = false
+    this.sideTop  = false
+  },
+
   startState   : false,
   questionState: false,
   answerState  : false, 
