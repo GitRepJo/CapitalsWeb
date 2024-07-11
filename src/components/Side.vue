@@ -6,11 +6,11 @@
       v-show="state.sideTop || state.sideLeft">
     </div>   
     
-    <div id="appSideLeft" v-show="state.sideLeft">
+    <div id="appSideLeft" v-show = "state.sideLeft">
       <SideLeft />
     </div>
 
-    <div id="appSideTop" v-show="state.sideTop" >
+    <div id="appSideTop" v-show = "state.sideTop" >
       <SideTop />
     </div>
    
@@ -21,17 +21,8 @@
 <script setup>
   import SideLeft from './SideLeft.vue';
   import SideTop from './SideTop.vue';
-  import { ref, watch } from 'vue'
   import {state} from "./StoreState.js"
  
-
-  // Manage uservalues according to state
-  watch(
-  () => state, 
-  () => { 
-   
-    }
-  ,{deep:true})
 
 </script>
 

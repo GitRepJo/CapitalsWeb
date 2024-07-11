@@ -1,6 +1,6 @@
 <template>  
   <div id="playControl">  
-    <Transition>
+    <Transition name="progress">
       <p id = "playControlProgress" v-if = "timerOn"></p>
     </Transition> 
     <button id="playControlButton" @click="onClick" > {{buttonText}} </button>
@@ -79,9 +79,9 @@
 </script>
 
 <style>
-  .v-enter-active{transition: transform  20.0s linear;}
+  .progress-enter-active{transition: transform  20.0s linear;}
 
-  .v-enter-from {transform: scaleX(0.01);}
+  .progress-enter-from {transform: scaleX(0.01);}
  
   #playControl{
     position:relative;

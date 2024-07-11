@@ -1,6 +1,6 @@
 <template>
-  <div id="vueApp">
-
+  <div id="vueApp" >
+    
     <div id ="vueMenu">
       <Menu/>
     </div>
@@ -15,6 +15,18 @@
       <Side/>
     </div>
 
+    <div id ="vueVerify" v-if = "sucess == false">
+      
+      <div id = "vueInteraction" >
+        <input  id="vueInput" @input="inputChange" 
+          v-model="password" placeholder="Passwort" />
+        <button id="vueEnter" @click="enter">Bestätigen</button>
+      </div>
+      <Transition>
+      <p id="vueInputError" v-show = "inputError"> Falsches Passwort  </p>
+      </Transition>
+   </div>
+    
   </div>
 </template>
 
@@ -23,10 +35,28 @@
   import Menu from './components/Menu.vue';
   import Side from './components/Side.vue';
   import {state} from "./components/StoreState.js";
-
+  import{ref} from "vue"
+ 
+  let password = ref("")
+  let sucess = ref(false)
+  let inputError = ref(false)
+  function enter(){
+    if (password.value == "essen") {sucess.value = true}
+    if (password.value != "essen") {inputError.value = true}
+  }
+  function inputChange(){inputError.value = false}
 </script>
 
 <style>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 
   #vueApp {
     font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -36,6 +66,42 @@
     left: 50%;
     transform: translateX(-50%);
     position: relative;
+  }
+  #vueVerify{
+    position: absolute;   
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    backdrop-filter: blur(5px);
+    display: flex;  
+    justify-content: center;
+    align-items: center;  
+    text-align: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #vueInputError{
+    color:#630000;
+  }
+  #vueInteraction{
+    height: 5%;
+    width: 80%;
+    display: flex;  
+    justify-content: center;
+    align-items: center;  
+    text-align: center;
+    gap: 10px;
+    flex-direction: row;
+    
+  }
+  #vueEnter{
+    height:100%;
+    border-radius: 5px;
+    background-color: rgb(0, 180, 0);
+  }
+  #vueInput{
+    height:100%;
+    border-radius: 5px;
   }
 
   #vueMenu{
@@ -69,6 +135,7 @@
     height: 87%;
     width: 100%;
   }
+
 
 </style>
 

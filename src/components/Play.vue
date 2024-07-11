@@ -49,7 +49,7 @@
     }
     if (state.endState){
       percentUserSum += useToPercentage(playDistUser.value)
-      playPercentUser.value = percentUserSum / state.questionNumber
+      playPercentUser.value = Math.round(percentUserSum / state.questionNumber)
       percentUserSum = 0
     }
   },{deep:true})

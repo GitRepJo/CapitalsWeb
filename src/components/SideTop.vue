@@ -14,8 +14,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr  v-for="score in scores">
-            <td>{{score.id}}</td>
+          <tr  v-for="(score,index) in scores">
+            <td>{{index +1}}</td>
             <td>{{score.username}}</td>
             <td>{{score.percent}}</td>
             <td>{{score.date}}</td>
@@ -33,9 +33,12 @@ import {ref} from "vue"
 const scores = ref([])
 
 async function getScores() {
-  const { data } = await supabase.from('Score').select()
+  const { data } = await supabase.from('Score').
+    select()
+    .order('id', { ascending: false })
+    .limit(99)
   scores.value = data
-  console.log("sidetop", scores)
+  scores.value.sort((a,b) => (parseFloat(b.percent)- parseFloat(a.percent)))
 }
 
 getScores()

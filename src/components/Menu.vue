@@ -25,6 +25,7 @@ import MenuOptions from './MenuSideLeft.vue';
     height: 100%;
     width: 50%;
     left: 25%;
+    font-size: 90%;
     display: flex;
     justify-content: center;
     align-items: center;  
