@@ -13,11 +13,11 @@ Choose for example Netlify to easily deploy the application.
 
 See below iamge of the start, answer and end state of the  
 application as an example.
-
-<img src="StartQuiz.PNG" width="150" height="280">
-<img src="AnswerQuiz.PNG" width="150" height="280">
-<img src="EndQuiz.PNG" width="150" height="280">
-
+<p float="left">
+	<img src="StartQuiz.PNG" width="150" height="280">
+	<img src="AnswerQuiz.PNG" width="150" height="280">
+	<img src="EndQuiz.PNG" width="150" height="280">
+</p>
 # Licence
 
 Map material is provided by  
